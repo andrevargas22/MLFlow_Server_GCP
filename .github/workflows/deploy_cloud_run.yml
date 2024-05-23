@@ -1,5 +1,4 @@
 # Docker build and push container to Artifact Registry, deploy on Cloud Run
-
 name: Deploy MLFlow Server
 
 on:
