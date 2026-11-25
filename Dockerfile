@@ -1,4 +1,4 @@
-FROM python:3.9-buster
+FROM python:3.12-slim-bookworm
 
 WORKDIR /
 
@@ -7,7 +7,7 @@ COPY server.sh server.sh
 
 ENV GOOGLE_APPLICATION_CREDENTIALS='./secrets/credentials'
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8080
 

@@ -17,14 +17,17 @@ jobs:
       REPOSITORY: MY_ARTIFACT_REPOSITORY    # edit here
       SERVICE_ACCOUNT: MY_SERVICE_ACCOUNT   # edit here
       SERVICE_NAME: MY_SERVICE_NAME         # edit here
+      # Host headers accepted by MLflow (required since MLflow 3.5, DNS rebinding protection).
+      # For tutorial use, any Cloud Run URL is accepted; restrict to your service host for real use.
+      ALLOWED_HOSTS: "*.run.app"
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - id: 'auth'
       name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v1
+      uses: google-github-actions/auth@v2
       with: 
         project_id: '${{ env.PROJECT_ID }}'
         credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
@@ -50,6 +53,7 @@ jobs:
           --update-secrets=/secrets/credentials=access_keys:latest \
           --update-secrets=POSTGRESQL_URL=database_url:latest \
           --update-secrets=STORAGE_URL=bucket_url:latest \
+          --update-env-vars="^@^MLFLOW_SERVER_ALLOWED_HOSTS=${{ env.ALLOWED_HOSTS }}" \
           --memory 2Gi \
           --allow-unauthenticated \
           --port 8080
