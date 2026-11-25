@@ -99,4 +99,4 @@ with mlflow.start_run(
     
     # Log model:
     signature = infer_signature(train_x, predictions)
-    mlflow.sklearn.log_model(lr, "model", signature=signature)
+    mlflow.sklearn.log_model(lr, name="model", signature=signature)
